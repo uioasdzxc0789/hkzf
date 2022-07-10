@@ -1,23 +1,34 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-
+import Layout from '@/views/Layout'
+const Home = () => import('@/views/Home')
+const Info = () => import('@/views/Info')
+const Login = () => import('@/views/Login')
+const Search = () => import('@/views/Search')
+const My = () => import('@/views/My')
+const RentHouse = () => import('@/views/RentHouse')
+const Rental = () => import('@/views/Rental')
+const City = () => import('@/views/City')
+const Detail = () => import('@/views/Detail')
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    component: Layout,
+    redirect: '/home',
+    children: [
+      { path: 'home', component: Home },
+      { path: 'search', component: Search },
+      { path: 'info', component: Info },
+      { path: 'my', component: My, name: 'my' }
+    ]
   },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+  { path: '/login', component: Login },
+  { path: '/renthouse', component: RentHouse, name: 'renthouse' },
+  { path: '/rental', component: Rental, name: 'rental' },
+  { path: '/city', component: City, name: 'city' },
+  { path: '/detail', component: Detail, name: 'detail' }
 ]
 
 const router = new VueRouter({

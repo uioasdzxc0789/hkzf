@@ -1,4 +1,33 @@
+// vue脚手架项目默认的配置文件名
+// webpack+node环境-导出配置对象
 const { defineConfig } = require('@vue/cli-service')
+const path = require('path')
 module.exports = defineConfig({
-  transpileDependencies: true
+  transpileDependencies: true,
+  devServer: {
+    open: true,
+    host: '127.0.0.1',
+    port: 3001
+  },
+  chainWebpack: config => {
+    config
+      .plugin('html')
+      .tap(args => {
+        args[0].title = '好客租房'
+        return args
+      })
+  },
+  css: {
+    loaderOptions: {
+      less: {
+        // 若 less-loader 版本小于 6.0，请移除 lessOptions 这一级，直接配置选项。
+        lessOptions: {
+          modifyVars: {
+            // 或者可以通过 less 文件覆盖（文件路径为绝对路径）
+            hack: `true; @import "${path.join(__dirname, '/src/styles/theme.less')}";`
+          }
+        }
+      }
+    }
+  }
 })
